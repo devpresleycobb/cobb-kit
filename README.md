@@ -1,4 +1,4 @@
-#Welcome to the CobbKit repository!
+# Welcome to the CobbKit repository!
 
 CobbKit is a desktop app used to as a base for tools I find helpful. The repo currently contains a single app that connects to GitHub and retrieves pull requests that have not been reviewed.
 
@@ -12,5 +12,11 @@ ORG_1=your_first_github_organization
 ORG_2=your_second_github_organization
 ```
 Replace `your_personal_access_token` with a personal access token that you have generated from GitHub, and replace `your_first_github_organization` and `your_second_github_organization` with the names of the organizations you want to retrieve pull requests for.
+
+To install the required dependencies for the app, run the following command in the root of the project:
+
+```bash
+pip install -r requirements.txt -t .
+```
 
 We hope you find this package useful, and we welcome any feedback or contributions to improve it!
