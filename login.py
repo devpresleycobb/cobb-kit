@@ -1,6 +1,5 @@
 import customtkinter
 import os
-
 from dashboard import Dashboard
 from dotenv import dotenv_values
 import re
@@ -15,10 +14,14 @@ class Login:
         self.checkbox = None
         self.frame = None
 
-    def draw_login_screen(self,):
-        self.root.geometry("500x350")
+    @property
+    def master(self):
+        return self.root.master
 
-        frame = customtkinter.CTkFrame(master=self.root)
+    def draw(self):
+        self.master.geometry("500x350")
+
+        frame = customtkinter.CTkFrame(master=self.master)
         frame.pack(pady=20, padx=60, fill="both", expand=True)
 
         label = customtkinter.CTkLabel(master=frame, text="Login System")
@@ -36,11 +39,9 @@ class Login:
 
     def login(self):
         self.save_credentials()
-        self.frame.pack_forget()
+        self.frame.destroy()
         dashboard = Dashboard(root=self.root)
-        dashboard.draw_dashboard()
-
-
+        dashboard.draw()
 
     def save_credentials(self) -> None:
         if not self.checkbox.get():
@@ -50,10 +51,12 @@ class Login:
             values = dotenv_values(".env")
             token = values.get("ACCESS_TOKEN")
             if token:
-                # modified_env = ''
                 with open(".env", "r") as f:
                     contents = f.read()
-                    modified_env = re.sub('ACCESS_TOKEN=[\w-]*[^\n]', f"ACCESS_TOKEN={self.access_token_entry.get()}", contents, flags=re.MULTILINE)
+                    modified_env = re.sub('ACCESS_TOKEN=[\w-]*[^\n]',
+                                          f"ACCESS_TOKEN={self.access_token_entry.get()}",
+                                          contents,
+                                          flags=re.MULTILINE)
                 self.write_credentials(modified_env)
             else:
                 self.write_credentials(self.access_token_entry.get(), True)

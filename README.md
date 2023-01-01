@@ -13,10 +13,21 @@ ORG_2=your_second_github_organization
 ```
 Replace `your_personal_access_token` with a personal access token that you have generated from GitHub, and replace `your_first_github_organization` and `your_second_github_organization` with the names of the organizations you want to retrieve pull requests for.
 
+
+## Installation
+
 To install the required dependencies for the app, run the following command in the root of the project:
 
 ```bash
 pip install -r requirements.txt -t .
 ```
 
+### Sqlite3
+
+The app uses sqlite3 to store data. To install sqlite3, run the following command:
+
+```bash
+/bin/bash -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew install sqlite3
+```
 We hope you find this package useful, and we welcome any feedback or contributions to improve it!
