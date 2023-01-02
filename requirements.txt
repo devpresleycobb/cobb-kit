@@ -1,4 +1,4 @@
-customtkinter
-requests
-python-dotenv
-pytest
+customtkinter==5.0.3
+requests==2.28.1
+python-dotenv==0.21.0
+pytest==7.2.0
