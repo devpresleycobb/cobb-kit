@@ -1,5 +1,6 @@
 import sqlite3
 from sql import create_repositories_sql
+import os
 
 
 class Database:
