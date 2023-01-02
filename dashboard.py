@@ -1,6 +1,5 @@
 import customtkinter
 import requests
-from reviewer import Reviewer
 from typing import List
 from components.sidebar import Sidebar
 
