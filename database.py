@@ -9,6 +9,7 @@ class Database:
     def __init__(self):
         self.conn = sqlite3.connect(Database.DATABASE_PATH)
         self.cursor = self.conn.cursor()
+        self.create_database()
         self.create_tables()
 
     def __new__(cls):
@@ -23,6 +24,13 @@ class Database:
 
     def __del__(self):
         self.conn.close()
+
+    def create_database(self):
+        """
+        If the database does not exist, create it.
+        """
+        if not os.path.exists(Database.DATABASE_PATH):
+            open(Database.DATABASE_PATH, "w").close()
 
     @staticmethod
     def get_instance():
