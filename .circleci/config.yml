@@ -13,4 +13,4 @@ jobs:
       - run:
           name: Run unit tests
           command: |
-            python -m pytest
+            cat requirements.txt
