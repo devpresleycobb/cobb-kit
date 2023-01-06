@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 
 class Apps(ABC):
 
+    @staticmethod
     @abstractmethod
-    def initialize(self):
+    def initialize(root):
         pass

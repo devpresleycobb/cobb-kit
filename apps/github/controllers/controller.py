@@ -5,20 +5,20 @@ class Controller(ABC):
 
     @staticmethod
     @abstractmethod
-    def show():
+    def show(_id: int):
         pass
 
     @staticmethod
     @abstractmethod
-    def store():
-        pass
-
-    @staticmethod
-    @abstractmethod
-    def update():
+    def store(name: str):
         pass
 
     @staticmethod
     @abstractmethod
     def delete():
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def index():
         pass

@@ -1,7 +1,4 @@
-import customtkinter
-import requests
-from typing import List
-from components.sidebar import Sidebar
+from sidebar import Sidebar
 
 
 class Dashboard:

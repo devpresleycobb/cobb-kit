@@ -1,6 +1,5 @@
 from dotenv import dotenv_values
 from requests import request, exceptions
-from apps.github.reviewer import Reviewer
 
 
 class API:

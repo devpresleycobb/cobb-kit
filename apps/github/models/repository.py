@@ -27,12 +27,6 @@ class Repository:
         return db.cursor.lastrowid
 
     @staticmethod
-    def update(id, data) -> None:
-        db = Database.get_instance()
-        db.cursor.execute("UPDATE repositories SET name = ? WHERE id = ?", (data['name'], id))
-        db.conn.commit()
-
-    @staticmethod
     def delete(id) -> int:
         db = Database.get_instance()
         db.cursor.execute("DELETE FROM repositories WHERE id = ?", (id,))
