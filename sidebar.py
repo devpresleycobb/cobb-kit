@@ -1,10 +1,8 @@
-from component import Component
+from components.component import Component
 import customtkinter
-from database import Database
-from menu_item import MenuItem
+from apps.github.menu_item import MenuItem
 from apps.github.app import Github
 import os
-from typing import Callable
 
 
 class Sidebar(Component):
@@ -14,14 +12,6 @@ class Sidebar(Component):
 
     def __init__(self, root):
         self.root = root
-
-    @property
-    def parts(self):
-        return [self.sidebar, self.title]
-
-    def add_parts(self):
-        for part in self.parts:
-            Screen.add_frame(part)
 
     @property
     def master(self):
