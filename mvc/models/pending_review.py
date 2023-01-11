@@ -1,5 +1,5 @@
 from apps.github.api import API
-from apps.github.views.view import View
+from mvc.views.view import View
 from apps.github.reviewer import Reviewer
 
 

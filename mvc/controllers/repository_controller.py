@@ -1,4 +1,4 @@
-from apps.github.views.view import View
+from mvc.views.view import View
 
 
 class RepositoryController:

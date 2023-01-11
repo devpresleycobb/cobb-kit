@@ -5,7 +5,7 @@ import os
 
 class Database:
     __instance = None
-    DATABASE_PATH = "database.db"
+    DATABASE_PATH = "database/database.db"
 
     def __init__(self):
         self.conn = sqlite3.connect(Database.DATABASE_PATH)

@@ -1,4 +1,4 @@
-from apps.github.models.pending_review import PendingReview
+from mvc.models.pending_review import PendingReview
 
 
 class PendingReviewController:

@@ -6,7 +6,9 @@ class Dashboard:
         self.root = root
 
     def draw(self):
-        self.master.geometry("900x350")
+        width = self.master.winfo_screenwidth()
+        height = self.master.winfo_screenheight()
+        self.master.geometry(f"{width}x{height}")
         sidebar = Sidebar(root=self.root)
         sidebar.create()
 

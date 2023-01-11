@@ -1,5 +1,5 @@
-from database import Database
-from apps.github.views.view import View
+from database.database import Database
+from mvc.views.view import View
 
 
 class Repository:

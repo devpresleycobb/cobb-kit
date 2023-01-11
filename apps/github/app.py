@@ -1,8 +1,8 @@
 from apps.app import Apps
-from apps.github.controllers.pending_review_controller import PendingReviewController
-from apps.github.views.view import View
-from apps.github.controllers.repository_controller import RepositoryController
-from apps.github.models.repository import Repository
+from mvc.controllers.pending_review_controller import PendingReviewController
+from mvc.views.view import View
+from mvc.controllers.repository_controller import RepositoryController
+from mvc.models.repository import Repository
 import webbrowser
 
 
@@ -19,12 +19,13 @@ class Github(Apps):
     def initialize(root):
         def github():
             _github = Github(root)
-            _github.draw_app()
+            return _github.draw_app()
         return github
 
     def draw_app(self):
         view = View(state=self.state)
         view.render()
+        return view
 
     @property
     def state(self):

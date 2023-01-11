@@ -2,6 +2,6 @@
 .idea
 venv
 __pycache__
-database.db
+database/database.db
 .DS_Store
 __pytest

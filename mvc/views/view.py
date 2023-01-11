@@ -1,7 +1,7 @@
 import customtkinter
 from singleton import Singleton
-from apps.github.views.repository_section import RepositorySection
-from apps.github.views.pr_section import PRSection
+from mvc.views.repository_section import RepositorySection
+from mvc.views.pr_section import PRSection
 
 
 class View(metaclass=Singleton):
