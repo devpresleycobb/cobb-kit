@@ -1,33 +1,17 @@
-from apps.github.models.repository import Repository
-from apps.github.controllers.controller import Controller
 from apps.github.views.view import View
 
 
-class RepositoryController(Controller):
+class RepositoryController:
 
-    @staticmethod
-    def index():
-        return Repository.all()
+    def __init__(self, repository):
+        self.repository = repository
+        self.view = View
 
-    @staticmethod
-    def show(_id: int):
-        return Repository(_id).get()
+    def index(self):
+        return self.repository.all()
 
-    @staticmethod
-    def store(name_entry):
-        def _store():
-            name = name_entry.get()
-            _id = Repository.create(name)
-            View().render()
-            return _id
-        return _store
+    def store(self, name_entry):
+        return self.repository.create(name_entry)
 
-    @staticmethod
-    def update(id: int, name: str):
-        Repository.update(id, name)
-        return Repository(id)
-
-    @staticmethod
-    def delete(id: int):
-        Repository.delete(id)
-        return {"message": "Organization deleted"}
+    def delete(self, _id: int):
+        return self.repository.delete(_id)
