@@ -21,20 +21,6 @@ class Repository:
         return cursor.fetchall()
 
     @staticmethod
-<<<<<<< Updated upstream:apps/github/repository.py
-    def create(name) -> int:
-        db = Database.get_instance()
-        db.cursor.execute("INSERT INTO repositories (name) VALUES (?)", (name,))
-        db.conn.commit()
-        return db.cursor.lastrowid
-
-    @staticmethod
-    def delete(id) -> int:
-        db = Database.get_instance()
-        db.cursor.execute("DELETE FROM repositories WHERE id = ?", (id,))
-        db.conn.commit()
-        return id
-=======
     def create(name_entry):
         @View.rerender
         def store() -> int:
@@ -44,7 +30,6 @@ class Repository:
             db.conn.commit()
             return db.cursor.lastrowid
         return store
->>>>>>> Stashed changes:apps/github/models/repository.py
 
     @staticmethod
     def delete(_id):
