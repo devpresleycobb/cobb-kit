@@ -1,10 +1,8 @@
 from apps.app import Apps
-from apps.github.api import API
 from apps.github.controllers.pending_review_controller import PendingReviewController
 from apps.github.views.view import View
 from apps.github.controllers.repository_controller import RepositoryController
 from apps.github.models.repository import Repository
-from apps.github.reviewer import Reviewer
 import webbrowser
 
 
