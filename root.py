@@ -1,7 +1,5 @@
 import customtkinter
 from dashboard import Dashboard
-from login import Login
-from dotenv import dotenv_values
 
 
 class Root:
@@ -27,11 +25,6 @@ class Root:
         customtkinter.set_appearance_mode("dark")
         customtkinter.set_default_color_theme("dark-blue")
         root = Root()
-        root.draw_login_screen = Login(root).draw
-        if dotenv_values().get("ACCESS_TOKEN"):
-            dashboard = Dashboard(root=root)
-            dashboard.draw()
-        else:
-            login = Login(root=root)
-            login.draw()
+        dashboard = Dashboard(root=root)
+        dashboard.draw()
         root.master.mainloop()

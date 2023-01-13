@@ -1,6 +1,6 @@
 from apps.app import Apps
 from mvc.controllers.pending_review_controller import PendingReviewController
-from mvc.views.view import View
+from mvc.views.github.view import View
 from mvc.controllers.repository_controller import RepositoryController
 from mvc.models.repository import Repository
 import webbrowser

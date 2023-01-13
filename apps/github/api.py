@@ -9,7 +9,7 @@ class API:
     @staticmethod
     def make_request(url, method="GET", data=None):
         try:
-            access_token = dotenv_values(".env").get("ACCESS_TOKEN")
+            access_token = dotenv_values(".env").get("GITHUB_PERSONAL_ACCESS_TOKEN")
             headers = {"Authorization": f"Bearer {access_token}"}
             response = request(url=API.BASE_URL + url, method=method, headers=headers, data=data)
             response.raise_for_status()

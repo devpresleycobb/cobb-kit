@@ -2,6 +2,7 @@ from components.component import Component
 import customtkinter
 from apps.github.menu_item import MenuItem
 from apps.github.app import Github
+from apps.settings.app import Settings
 
 
 class Sidebar(Component):
@@ -58,6 +59,8 @@ class Sidebar(Component):
 
     def go_to_settings(self):
         self.active_app.clear()
+        Settings.initialize(self.root)()
+
 
     def set_menu_items(self):
         self.apps = [MenuItem(text="Github", command=Github.initialize(self.root))]

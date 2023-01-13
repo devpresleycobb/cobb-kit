@@ -1,10 +1,11 @@
 import customtkinter
+from mvc.views.baseview import BaseView
 from singleton import Singleton
-from mvc.views.repository_section import RepositorySection
-from mvc.views.pr_section import PRSection
+from mvc.views.github.repository_section import RepositorySection
+from mvc.views.github.pr_section import PRSection
 
 
-class View(metaclass=Singleton):
+class View(BaseView, metaclass=Singleton):
     title = None
     APP_NAME = "Github"
     initialized = False
@@ -22,7 +23,7 @@ class View(metaclass=Singleton):
         self._state = state
 
     def render(self):
-        view = View()
+        view = BaseView.get_view(view=View)
         if view.initialized:
             view.clear()
         master = view.state['master']
@@ -33,31 +34,6 @@ class View(metaclass=Singleton):
         RepositorySection.render(state=view.state, frame=view.frame)
         PRSection.render(state=view.state, frame=view.frame)
         view.initialized = True
-
-    @staticmethod
-    def rerender(*args, **kwargs):
-        if args and callable(args[0]):
-            func = args[0]
-            return View.render_wrapper()(func)
-        update_key = kwargs.get('update')
-        return View.render_wrapper(update_key=update_key)
-
-    @staticmethod
-    def render_wrapper(update_key=None):
-        def decorator(func):
-            def wrapper(*args, **kwargs):
-                result = func(*args, **kwargs)
-                view = View()
-                if update_key:
-                    state = view.state
-                    state['data'][update_key] = result
-                    view.state = state
-                    view.render()
-                    return result
-                view.render()
-                return result
-            return wrapper
-        return decorator
 
     def clear(self):
         self.frame.destroy()
