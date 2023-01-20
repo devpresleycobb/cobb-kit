@@ -1,6 +1,7 @@
 from apps.app import Apps
 from mvc.views.settings.view import View
 from mvc.controllers.env_key_controller import EnvKeyController
+from mvc.models.env import Env
 
 
 class Settings(Apps):
@@ -26,7 +27,7 @@ class Settings(Apps):
 
     @property
     def state(self):
-        env_key_controller = EnvKeyController()
+        env_key_controller = EnvKeyController(Env)
         return {
             'master': self.master,
             'commands': {

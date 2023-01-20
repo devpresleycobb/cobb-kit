@@ -61,7 +61,6 @@ class Sidebar(Component):
         self.active_app.clear()
         Settings.initialize(self.root)()
 
-
     def set_menu_items(self):
         self.apps = [MenuItem(text="Github", command=Github.initialize(self.root))]
         self.render(self.apps[0])()

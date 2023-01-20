@@ -1,10 +1,12 @@
-from mvc.models.env import Env
 
 
 class EnvKeyController:
 
+    def __init__(self, env):
+        self.env = env()
+
     def show(self, key):
-        return Env.get_key_by_name(key)
+        return self.env.get_key_by_name(key)
 
     def update(self, key, value):
-        Env.set_key_by_name(key, value)
+        return self.env.set_key_by_name(key, value)

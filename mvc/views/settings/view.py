@@ -1,10 +1,13 @@
 import customtkinter
-from singleton import Singleton
+
+from events.event_listener import EventListener
+from singleton import singleton
 from mvc.views.baseview import BaseView
 from mvc.views.settings.github import Github
 
 
-class View(BaseView, metaclass=Singleton):
+@singleton
+class View(BaseView, EventListener):
     title = None
     APP_NAME = "Settings"
     initialized = False
@@ -13,30 +16,26 @@ class View(BaseView, metaclass=Singleton):
 
     def __init__(self, state=None):
         self._state = state
+        super().__init__()
+        self.events.subscribe(self)
+
+    def update(self, key, data, rerender=True):
+        if data is not None:
+            self.update_state(key=key, data=data)
+        if rerender:
+            self.render()
 
     @property
-    def state(self):
-        return self._state
-
-    @state.setter
-    def state(self, state):
-        self._state = state
+    def event_type(self):
+        return "settings"
 
     def render(self):
-        view = BaseView.get_view(view=View)
+        view = View()
         if view.initialized:
             view.clear()
-        master = view.state['master']
-        view.frame = customtkinter.CTkFrame(master=master)
-        view.frame.grid(row=0, column=1, sticky="nsew")
-        master.grid_columnconfigure(1, weight=1)
         view.add_title()
         Github.render(state=view.state, frame=view.frame)
         view.initialized = True
-
-    def clear(self):
-        self.frame.destroy()
-        self.initialized = False
 
     def add_title(self):
         self.title = customtkinter.CTkLabel(master=self.frame,

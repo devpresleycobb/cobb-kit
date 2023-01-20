@@ -1,33 +1,51 @@
+import customtkinter
+from events.event_manager import EventManager
+
+
 class BaseView:
 
-    current_view = None
+    frame = None
+    initialized = False
 
-    @staticmethod
-    def get_view(view):
-        BaseView.current_view = view
-        return view()
+    def __init__(self):
+        self.events = EventManager()
+        self.create_frame()
 
-    @staticmethod
-    def rerender(*args, **kwargs):
-        if args and callable(args[0]):
-            func = args[0]
-            return BaseView.render_wrapper()(func)
-        update_key = kwargs.get('update')
-        return BaseView.render_wrapper(update_key=update_key)
+    def create_frame(self):
+        self.frame = customtkinter.CTkFrame(master=self.state['master'])
+        self.frame.grid(row=0, column=1, sticky="nsew")
+        self.master.grid_columnconfigure(1, weight=1)
 
-    @staticmethod
-    def render_wrapper(update_key=None):
-        def decorator(func):
-            def wrapper(*args, **kwargs):
-                result = func(*args, **kwargs)
-                view = BaseView.current_view()
-                if update_key:
-                    state = view.state
-                    state['data'][update_key] = result
-                    view.state = state
-                    view.render()
-                    return result
-                view.render()
-                return result
-            return wrapper
-        return decorator
+    @property
+    def master(self):
+        return self.state['master']
+
+    @property
+    def commands(self):
+        return self.state['commands']
+
+    @property
+    def data(self):
+        return self.state['data']
+
+    @property
+    def page(self):
+        return self.state['page']
+
+    @property
+    def state(self):
+        return self._state
+
+    @state.setter
+    def state(self, state):
+        self._state = state
+
+    def update_state(self, key, data):
+        state = self.state
+        state['data'][key] = data
+        self.state = state
+
+    def clear(self):
+        self.frame.destroy()
+        self.create_frame()
+        self.initialized = False

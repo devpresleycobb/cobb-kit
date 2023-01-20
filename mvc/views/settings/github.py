@@ -41,7 +41,7 @@ class Github:
         self.add_button.grid(pady=20, padx=20, row=1, column=3, sticky="n")
 
     def add_github_stared_key(self):
-        access_token = self.state['commands'].get('get_env_by_name')(Github.PERSONAL_ACCESS_TOKEN_KEY)
+        access_token = self.state['commands']['get_env_by_name'](Github.PERSONAL_ACCESS_TOKEN_KEY)
         self.settings_section = customtkinter.CTkLabel(master=self.frame,
                                                        text='*' * len(access_token),
                                                        font=customtkinter.CTkFont(size=15,
@@ -50,4 +50,4 @@ class Github:
 
     def add_github_token(self):
         entry = self.github_entry.get()
-        self.state['commands'].get('set_env_by_name')(Github.PERSONAL_ACCESS_TOKEN_KEY, entry)
+        self.state['commands']['set_env_by_name'](Github.PERSONAL_ACCESS_TOKEN_KEY, entry)

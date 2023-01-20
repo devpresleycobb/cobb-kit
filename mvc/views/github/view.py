@@ -1,11 +1,18 @@
 import customtkinter
+
 from mvc.views.baseview import BaseView
-from singleton import Singleton
-from mvc.views.github.repository_section import RepositorySection
-from mvc.views.github.pr_section import PRSection
+from singleton import singleton
+from mvc.views.github.repositories import Repositories
+from mvc.views.github.pending import Pending
+from mvc.views.github.open import Open
+from mvc.views.github.complete import Complete
+
+from mvc.views.github.submenu import SubMenu
+from events.event_listener import EventListener
 
 
-class View(BaseView, metaclass=Singleton):
+@singleton
+class View(BaseView, EventListener):
     title = None
     APP_NAME = "Github"
     initialized = False
@@ -13,35 +20,44 @@ class View(BaseView, metaclass=Singleton):
 
     def __init__(self, state=None):
         self._state = state
+        super().__init__()
+        self.events.subscribe(self)
+
+    def update(self, key, data, rerender=True):
+        if data is not None:
+            self.update_state(key=key, data=data)
+        if rerender:
+            self.render()
 
     @property
-    def state(self):
-        return self._state
-
-    @state.setter
-    def state(self, state):
-        self._state = state
+    def event_type(self):
+        return "github"
 
     def render(self):
-        view = BaseView.get_view(view=View)
+        view = View()
         if view.initialized:
             view.clear()
-        master = view.state['master']
-        view.frame = customtkinter.CTkFrame(master=master)
-        view.frame.grid(row=0, column=1, sticky="nsew")
-        master.grid_columnconfigure(1, weight=1)
         view.add_title()
-        RepositorySection.render(state=view.state, frame=view.frame)
-        PRSection.render(state=view.state, frame=view.frame)
+        self.render_pr_section()
+        Repositories.render(view=view)
+        SubMenu.render(view=view)
         view.initialized = True
 
-    def clear(self):
-        self.frame.destroy()
-        self.initialized = False
+    @property
+    def sections(self):
+        return {
+            'pending': Pending,
+            'open': Open,
+            'complete': Complete
+        }
+
+    def render_pr_section(self):
+        section = self.sections[self.data['page']]
+        section.render(view=self)
 
     def add_title(self):
         self.title = customtkinter.CTkLabel(master=self.frame,
                                             text=self.APP_NAME,
                                             font=customtkinter.CTkFont(size=20,
                                                                        weight="bold"))
-        self.title.grid(pady=20, padx=20, row=0, column=1, sticky="n")
+        self.title.grid(pady=20, padx=20, row=0, column=0, sticky="nw")

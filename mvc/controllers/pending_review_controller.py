@@ -1,10 +1,7 @@
-from mvc.models.pending_review import PendingReview
-
-
 class PendingReviewController:
 
-    def __init__(self, pending_review=PendingReview):
-        self.pending_review = pending_review
+    def __init__(self, pending_review):
+        self.pending_review = pending_review()
 
-    def show(self, name: str):
+    def show(self, name: str = None):
         return self.pending_review.all(name)

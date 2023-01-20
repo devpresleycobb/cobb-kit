@@ -1,14 +1,23 @@
 from dotenv import dotenv_values, set_key
-from mvc.views.settings.view import View
+from events.event_manager import EventManager
+import os
 
 
 class Env:
 
-    @staticmethod
-    def get_key_by_name(name):
-        return dotenv_values(".env").get(name)
+    events = None
+    PATH = '.env'
 
-    @staticmethod
-    @View.rerender(update='access_token')
-    def set_key_by_name(name, value):
-        set_key(".env", name, value)
+    def __init__(self):
+        self.events = EventManager()
+
+    def get_key_by_name(self, name):
+        return dotenv_values(".env").get(name, '')
+
+    def set_key_by_name(self, name, value):
+        if not os.path.exists(Env.PATH):
+            with open(Env.PATH, 'w') as f:
+                f.write(f"{name}='{value}'")
+        else:
+            set_key(".env", name, value)
+        self.events.notify('settings')

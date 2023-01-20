@@ -1,13 +1,12 @@
-from mvc.views.github.view import View
-
-
 class RepositoryController:
 
     def __init__(self, repository):
-        self.repository = repository
-        self.view = View
+        self.repository = repository()
 
     def index(self):
+        return self.repository.index()
+
+    def all(self):
         return self.repository.all()
 
     def store(self, name_entry):

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Reviewer:
+class User:
     username: str
     avatar_url: str
     profile_url: str

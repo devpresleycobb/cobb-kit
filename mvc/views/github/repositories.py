@@ -1,7 +1,7 @@
 import customtkinter
 
 
-class RepositorySection:
+class Repositories:
 
     repository_section_label = None
     repository_name = None
@@ -11,15 +11,15 @@ class RepositorySection:
     commands = {}
     data = {}
 
-    def __init__(self, state, frame):
-        self.state = state
-        self.frame = frame
+    def __init__(self, view):
+        self.state = view.state
+        self.frame = view.frame
+        self.commands = view.state['commands']
+        self.data = view.state['data']
 
     @staticmethod
-    def render(state, frame):
-        partial = RepositorySection(state=state, frame=frame)
-        partial.commands = state['commands']
-        partial.data = state['data']
+    def render(view):
+        partial = Repositories(view=view)
         partial.add_repository_section_label()
         partial.add_repository_entry()
         partial.add_repository_controls()
@@ -43,20 +43,24 @@ class RepositorySection:
         self.add_button = customtkinter.CTkButton(master=controls,
                                                   text="+",
                                                   command=add_repository_command,
-                                                  width=30)
+                                                  width=30,
+                                                  fg_color='#4BB543',
+                                                  hover_color='#35912F')
         self.add_button.grid(pady=10, padx=10, row=0, column=0, sticky="nw")
 
     def add_repositories(self):
-        repositories = self.state['commands']['show_repositories']()
-        for index, repository in enumerate(repositories):
+        for index, repository in enumerate(self.data['repositories']):
             name = repository[1]
             _id = repository[0]
             self.delete_button = customtkinter.CTkButton(master=self.frame,
                                                          text="x",
                                                          command=self.commands['delete_repository'](_id),
-                                                         width=30)
+                                                         width=30,
+                                                         fg_color="#d0342c",
+                                                         hover_color="#8b0000")
             repository = customtkinter.CTkLabel(master=self.frame, text=name, cursor="pointinghand")
             repository.grid(pady=10, padx=20, sticky="nw", row=index + 4, column=0)
             self.delete_button.grid(pady=10, padx=20, sticky="nw", row=index + 4, column=1)
-            repository.bind("<Button-1>", self.commands['show_prs'](name))
+            command = 'show_' + self.data['page']
+            repository.bind("<Button-1>", self.commands[command](name))
             self.repositories.append(repository)
